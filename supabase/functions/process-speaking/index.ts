@@ -34,18 +34,18 @@ function asStringArray(value: unknown): string[] {
   return value.filter((item): item is string => typeof item === "string").slice(0, 8);
 }
 
-function asObjectArray<T extends Record<string, unknown>>(value: unknown, keys: (keyof T)[]): T[] {
+function asObjectArray(value: unknown, keys: string[]): Record<string, string>[] {
   if (!Array.isArray(value)) return [];
-  return value.slice(0, 8).filter((item): item is T => {
+  return value.slice(0, 8).filter((item) => {
     if (!item || typeof item !== "object" || Array.isArray(item)) return false;
-    return keys.some((key) => typeof (item as Record<string, unknown>)[key as string] === "string");
+    return keys.some((key) => typeof (item as Record<string, unknown>)[key] === "string");
   }).map((item) => {
-    const safe: Record<string, unknown> = {};
+    const safe: Record<string, string> = {};
     for (const key of keys) {
-      const field = (item as Record<string, unknown>)[key as string];
-      if (typeof field === "string") safe[key as string] = field.slice(0, 1200);
+      const field = (item as Record<string, unknown>)[key];
+      if (typeof field === "string") safe[key] = field.slice(0, 1200);
     }
-    return safe as T;
+    return safe;
   });
 }
 
