@@ -35,11 +35,9 @@ The app uses the existing schema: `profiles`, `prompts`, `practice_sessions`, an
 
 The app converts browser recordings to 16 kHz mono WAV before sending them to Groq. The current UI limits uploads to 25 MB. The feedback scores are estimates based on the transcript only; they do not measure pronunciation, vocal delivery, accent, pace, or body language.
 
-Groq's free-tier quotas and model availability can change. Handle rate limits and check Groq's current pricing and terms before using the app at scale or with sensitive recordings.
 
 ## Security notes
 
 - The Groq key stays in Supabase Edge Function secrets.
 - Browser code uses only the Supabase publishable key and relies on RLS for user data.
 - The Edge Function verifies the user's access token before creating or updating session data.
-- Never commit `.env.local`, Groq API keys, Supabase secret keys, or service-role keys.
